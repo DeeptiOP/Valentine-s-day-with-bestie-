@@ -2,39 +2,70 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dipismita's Secret Valentine</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
+    <div class="floating-hearts"></div>
+
     <header>
-        <h1>Happy Valentine's Day, Dipismita! 💖</h1>
-        <p>From your bestie who knows you too well...</p>
+        <h1>Happy Valentine's Day, Dipismita 💖</h1>
+        <p>From your chaotic but loving bestie</p>
     </header>
-    
+
     <main>
-        <section id="letter">
+
+        <!-- LETTER SECTION -->
+        <section class="card">
             <h2>A Special Message</h2>
-            <p id="message">Dear Dipismita, Roses are red, violets are blue, but this message is about to prank you! Click the heart to reveal the truth.</p>
-            <button id="reveal-btn">💕 Click Me!</button>
-            <div id="prank" style="display: none;">
-                <p>Just kidding! This is a prank site. Your real gift is [insert funny placeholder, like 'a lifetime supply of memes']. Surprise! 🎉</p>
-                <img src="https://via.placeholder.com/300x200?text=Prank+Pic" alt="Funny prank image">
+            <p id="message">
+                Dear Dipismita, Roses are red, violets are blue... 
+                something suspicious is waiting for you.
+            </p>
+
+            <button id="reveal-btn">💕 Reveal Secret</button>
+
+            <div id="prank">
+                <p id="prank-text"></p>
+                <img src="https://picsum.photos/400/250" alt="Funny Surprise">
             </div>
         </section>
-        
-        <section id="interactive">
-            <h2>Interactive Fun</h2>
-            <button id="confetti-btn">Spray Confetti!</button>
+
+        <!-- GALLERY -->
+        <section class="card">
+            <h2>Our Memories</h2>
+            <div class="gallery">
+                <img src="https://picsum.photos/300/200?1">
+                <img src="https://picsum.photos/300/200?2">
+                <img src="https://picsum.photos/300/200?3">
+                <img src="https://picsum.photos/300/200?4">
+            </div>
+        </section>
+
+        <!-- CONFETTI -->
+        <section class="card">
+            <h2>Celebrate</h2>
+            <button id="confetti-btn">🎉 Shower Confetti</button>
             <canvas id="confetti-canvas"></canvas>
         </section>
+
     </main>
-    
+
     <footer>
-        <p>Made with love (and a dash of mischief) by your bestie. 😘</p>
-        <button id="prank-mode">Activate Prank Mode</button>
+        <p>Made with love and unnecessary drama ✨</p>
+        <button id="prank-mode">Activate Chaos Mode</button>
+        <button id="music-toggle">🎵 Play Music</button>
     </footer>
-    
+
+    <audio id="bg-music" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
     <script src="script.js"></script>
 </body>
-  </html>
+</html>

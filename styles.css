@@ -299,3 +299,24 @@ footer {
         height: 180px;
     }
 }
+
+#single-message {
+    margin-top: 20px;
+    font-size: 1.8rem;
+    font-weight: 600;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.6s ease;
+}
+
+#single-message.show {
+    opacity: 1;
+    transform: scale(1);
+    animation: dramaticPop 0.8s ease;
+}
+
+@keyframes dramaticPop {
+    0% { transform: scale(0.5); }
+    60% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}

@@ -1,30 +1,84 @@
-// Reveal prank on button click
-document.getElementById('reveal-btn').addEventListener('click', function() {
-    document.getElementById('prank').style.display = 'block';
-    document.getElementById('message').innerHTML = "Muahaha! Gotcha! 😈";
+// Typing Reveal Effect
+document.getElementById('reveal-btn').addEventListener('click', function () {
+
+    const prankDiv = document.getElementById('prank');
+    const prankText = document.getElementById('prank-text');
+    prankDiv.classList.add('show');
+
+    const text = "Just kidding! Your real gift is a lifetime supply of memes and my emotional support forever 😌";
+    let i = 0;
+    prankText.innerHTML = "";
+
+    function type() {
+        if (i < text.length) {
+            prankText.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(type, 40);
+        }
+    }
+    type();
 });
 
-// Confetti effect (simple canvas-based)
-document.getElementById('confetti-btn').addEventListener('click', function() {
+
+// Confetti Animation
+document.getElementById('confetti-btn').addEventListener('click', function () {
+
     const canvas = document.getElementById('confetti-canvas');
     const ctx = canvas.getContext('2d');
+
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
-    
-    // Simple confetti particles
-    for (let i = 0; i < 100; i++) {
-        ctx.fillStyle = `hsl(${Math.random() * 360}, 100%, 50%)`;
-        ctx.fillRect(Math.random() * canvas.width, Math.random() * canvas.height, 5, 5);
+
+    let particles = [];
+
+    for (let i = 0; i < 150; i++) {
+        particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            size: Math.random() * 6 + 4,
+            speed: Math.random() * 3 + 2,
+            color: `hsl(${Math.random() * 360},100%,50%)`
+        });
     }
-    setTimeout(() => ctx.clearRect(0, 0, canvas.width, canvas.height), 3000);
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        particles.forEach(p => {
+            ctx.fillStyle = p.color;
+            ctx.fillRect(p.x, p.y, p.size, p.size);
+            p.y += p.speed;
+
+            if (p.y > canvas.height) {
+                p.y = 0;
+            }
+        });
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    setTimeout(() => ctx.clearRect(0, 0, canvas.width, canvas.height), 5000);
 });
 
-// Prank mode: Change the whole page
-document.getElementById('prank-mode').addEventListener('click', function() {
-    document.body.innerHTML = `
-        <h1>Prank Activated! 🐱</h1>
-        <p>Everything is now cats! Meow Valentine's Day!</p>
-        <img src="https://via.placeholder.com/400x300?text=Cat+Prank" alt="Cat meme">
-        <button onclick="location.reload()">Reset (or not? 😏)</button>
-    `;
+
+// Chaos Mode
+document.getElementById('prank-mode').addEventListener('click', function () {
+    document.body.classList.toggle('chaos');
+});
+
+
+// Music Toggle
+const music = document.getElementById("bg-music");
+const musicBtn = document.getElementById("music-toggle");
+
+musicBtn.addEventListener("click", function () {
+    if (music.paused) {
+        music.play();
+        musicBtn.innerText = "⏸ Pause Music";
+    } else {
+        music.pause();
+        musicBtn.innerText = "🎵 Play Music";
+    }
 });

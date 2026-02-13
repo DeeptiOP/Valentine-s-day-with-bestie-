@@ -1,27 +1,35 @@
+/* =========================
+   RESET
+========================= */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* =========================
+   BODY + BACKGROUND
+========================= */
 body {
     font-family: 'Poppins', sans-serif;
     text-align: center;
     overflow-x: hidden;
     color: white;
+    min-height: 100vh;
+
     background: linear-gradient(-45deg, #ff6ec4, #7873f5, #ff1493, #6a5acd);
     background-size: 400% 400%;
     animation: gradientMove 12s ease infinite;
 }
 
-/* Animated Background */
+/* Animated Gradient */
 @keyframes gradientMove {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
 
-/* Floating Glow Orbs */
+/* Glow Orbs */
 body::before,
 body::after {
     content: "";
@@ -31,23 +39,26 @@ body::after {
     border-radius: 50%;
     filter: blur(120px);
     z-index: -1;
-    opacity: 0.4;
+    opacity: 0.35;
 }
 
 body::before {
     background: #ff1493;
-    top: -100px;
-    left: -100px;
+    top: -120px;
+    left: -120px;
 }
 
 body::after {
     background: #00ffff;
-    bottom: -100px;
-    right: -100px;
+    bottom: -120px;
+    right: -120px;
 }
 
+/* =========================
+   HEADER
+========================= */
 header {
-    padding: 50px 20px;
+    padding: 60px 20px 40px;
     animation: fadeDown 1s ease;
 }
 
@@ -57,11 +68,10 @@ h1 {
     text-shadow: 0 5px 20px rgba(0,0,0,0.3);
 }
 
-/* Smooth fade in */
 @keyframes fadeDown {
     from {
         opacity: 0;
-        transform: translateY(-30px);
+        transform: translateY(-40px);
     }
     to {
         opacity: 1;
@@ -69,33 +79,39 @@ h1 {
     }
 }
 
+/* =========================
+   MAIN CONTAINER
+========================= */
 main {
     width: 90%;
     max-width: 1000px;
     margin: auto;
 }
 
-/* Glass Card */
+/* =========================
+   GLASS CARD
+========================= */
 .card {
     background: rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(15px);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
     border-radius: 25px;
-    padding: 35px;
+    padding: 40px 30px;
     margin: 40px 0;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.35);
     transition: transform 0.4s ease, box-shadow 0.4s ease;
     animation: fadeUp 1s ease;
 }
 
 .card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+    transform: translateY(-12px);
+    box-shadow: 0 30px 70px rgba(0,0,0,0.45);
 }
 
 @keyframes fadeUp {
     from {
         opacity: 0;
-        transform: translateY(40px);
+        transform: translateY(50px);
     }
     to {
         opacity: 1;
@@ -103,7 +119,9 @@ main {
     }
 }
 
-/* Buttons */
+/* =========================
+   BUTTONS
+========================= */
 button {
     margin-top: 20px;
     padding: 14px 30px;
@@ -121,14 +139,39 @@ button {
 
 button:hover {
     transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.45);
 }
 
-/* Reveal Section */
+button:active {
+    transform: scale(0.98);
+}
+
+/* Ripple Effect */
+.ripple {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: rgba(255,255,255,0.7);
+    border-radius: 50%;
+    transform: scale(0);
+    animation: rippleEffect 0.6s linear;
+    pointer-events: none;
+}
+
+@keyframes rippleEffect {
+    to {
+        transform: scale(12);
+        opacity: 0;
+    }
+}
+
+/* =========================
+   REVEAL SECTION
+========================= */
 #prank {
     margin-top: 25px;
     opacity: 0;
-    transform: scale(0.8);
+    transform: scale(0.85);
     transition: all 0.6s ease;
 }
 
@@ -143,9 +186,9 @@ button:hover {
     max-width: 350px;
     height: auto;
     display: block;
-    margin: 20px auto;
+    margin: 25px auto;
     border-radius: 20px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
     transition: transform 0.4s ease;
 }
 
@@ -153,7 +196,9 @@ button:hover {
     transform: scale(1.08) rotate(2deg);
 }
 
-/* Gallery */
+/* =========================
+   GALLERY
+========================= */
 .gallery {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -171,10 +216,12 @@ button:hover {
 
 .gallery img:hover {
     transform: scale(1.1);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
 }
 
-/* Confetti Canvas */
+/* =========================
+   CONFETTI CANVAS
+========================= */
 #confetti-canvas {
     width: 100%;
     height: 300px;
@@ -183,15 +230,17 @@ button:hover {
     background: rgba(255,255,255,0.08);
 }
 
-/* Floating Hearts Layer */
+/* =========================
+   FLOATING HEARTS
+========================= */
 .floating-hearts::before {
     content: "💖 💕 💗 💓 💘 💞 💝";
     position: fixed;
     width: 200%;
     top: 20%;
     font-size: 2rem;
-    opacity: 0.07;
-    animation: floatHearts 25s linear infinite;
+    opacity: 0.06;
+    animation: floatHearts 30s linear infinite;
     pointer-events: none;
 }
 
@@ -200,15 +249,53 @@ button:hover {
     to { transform: translateX(-50%); }
 }
 
+/* =========================
+   FOOTER
+========================= */
 footer {
-    padding: 40px;
+    padding: 40px 20px;
     opacity: 0.9;
 }
 
-/* Chaos Mode Upgrade */
+/* =========================
+   CHAOS MODE
+========================= */
 .chaos {
     background: radial-gradient(circle, black, #111) !important;
     color: lime !important;
     transform: rotate(180deg);
     transition: all 1s ease;
+}
+
+/* =========================
+   SCROLLBAR
+========================= */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.4);
+    border-radius: 10px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
     }
+
+    .card {
+        padding: 30px 20px;
+    }
+
+    .gallery img {
+        height: 180px;
+    }
+}

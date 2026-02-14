@@ -186,3 +186,41 @@ animation:shake 0.2s infinite;
 75%{transform:translate(-2px,-2px);}
 100%{transform:translate(0,0);}
 }
+
+/* Party Booster Mode */
+
+.party-mode {
+animation: partyFlash 0.7s infinite alternate;
+}
+
+@keyframes partyFlash {
+0% { background:#ff2e63; }
+25% { background:#6c5ce7; }
+50% { background:#00f2ff; }
+75% { background:#ff9a00; }
+100% { background:#ff2e63; }
+}
+
+#party-message {
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:3rem;
+font-weight:700;
+text-align:center;
+color:white;
+z-index:99999;
+opacity:0;
+transition:0.5s;
+}
+
+#party-message.show {
+opacity:1;
+animation:bounce 1s infinite;
+}
+
+@keyframes bounce {
+0%,100% { transform:translate(-50%,-50%) scale(1); }
+50% { transform:translate(-50%,-50%) scale(1.3); }
+}

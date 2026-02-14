@@ -137,3 +137,30 @@ h.x=Math.random()*canvas.width;
 requestAnimationFrame(animateHearts);
 }
 animateHearts();
+
+// Rotate prank image on scroll
+const prankImg = document.querySelector(".prank-img");
+
+window.addEventListener("scroll", () => {
+
+if(prankImg){
+
+const rect = prankImg.getBoundingClientRect();
+const windowHeight = window.innerHeight;
+
+// Only rotate when image is visible
+if(rect.top < windowHeight && rect.bottom > 0){
+
+let scrollPercent = (windowHeight - rect.top) / windowHeight;
+
+// Rotate up to 360 degrees
+let rotation = scrollPercent * 360;
+
+prankImg.style.transform = `rotate(${rotation}deg)`;
+
+}
+}
+
+});
+
+

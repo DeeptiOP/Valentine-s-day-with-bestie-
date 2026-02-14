@@ -120,7 +120,28 @@ box-shadow:0 0 30px rgba(255,105,180,0.2);
 transform:translateY(-8px);
 box-shadow:0 0 50px rgba(255,105,180,0.4);
 }
+/* Prank Image Proper Size */
 
+.prank-img{
+width:100%;
+max-width:350px;
+display:block;
+margin:2rem auto 0;
+border-radius:20px;
+box-shadow:0 20px 40px rgba(0,0,0,0.4);
+transition:transform 0.2s ease-out;
+will-change:transform;
+}
+
+/* Optional subtle floating effect */
+.prank-img.float {
+animation:floatImg 3s ease-in-out infinite alternate;
+}
+
+@keyframes floatImg {
+0% { transform:translateY(0px); }
+100% { transform:translateY(-10px); }
+}
 /* Reveal */
 
 .reveal{

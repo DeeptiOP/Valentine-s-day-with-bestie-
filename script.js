@@ -1,206 +1,76 @@
-// =======================================
-// SAFE ELEMENT HELPER
-// =======================================
-function safeAddListener(element, event, callback) {
-    if (element) {
-        element.addEventListener(event, callback);
-    }
+// Scroll Reveal
+const reveals=document.querySelectorAll(".reveal");
+const observer=new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+entry.target.classList.add("active");
 }
+});
+},{threshold:0.2});
+reveals.forEach(r=>observer.observe(r));
 
-// =======================================
-// PAGE ENTRANCE FADE
-// =======================================
-window.addEventListener("load", () => {
-    document.body.style.opacity = "0";
-    document.body.style.transition = "opacity 1s ease";
-    setTimeout(() => {
-        document.body.style.opacity = "1";
-    }, 100);
+// Cursor Glow
+const cursor=document.querySelector(".cursor");
+const trail=document.querySelector(".cursor-trail");
+
+document.addEventListener("mousemove",e=>{
+cursor.style.left=e.clientX+"px";
+cursor.style.top=e.clientY+"px";
+trail.style.left=e.clientX-10+"px";
+trail.style.top=e.clientY-10+"px";
 });
 
-// =======================================
-// TYPING REVEAL EFFECT
-// =======================================
-const revealBtn = document.getElementById("reveal-btn");
-const prankDiv = document.getElementById("prank");
-const prankText = document.getElementById("prank-text");
+// Floating Heart Particles
+const canvas=document.getElementById("heart-canvas");
+const ctx=canvas.getContext("2d");
 
-safeAddListener(revealBtn, "click", function () {
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
 
-    if (!prankDiv || !prankText) return;
+let hearts=[];
 
-    revealBtn.disabled = true;
-    prankDiv.classList.add("show");
-
-    const text = "Just kidding! Your real gift is a lifetime supply of memes and my emotional support forever 😌";
-    let i = 0;
-    prankText.innerHTML = "";
-
-    function type() {
-        if (i < text.length) {
-            prankText.innerHTML += text.charAt(i);
-            i++;
-            setTimeout(type, 35);
-        }
-    }
-
-    type();
+for(let i=0;i<40;i++){
+hearts.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+size:Math.random()*20+10,
+speed:Math.random()*1+0.5
 });
-
-// =======================================
-// CONFETTI EXPLOSION + PRANK MESSAGE
-// =======================================
-const confettiBtn = document.getElementById("confetti-btn");
-const canvas = document.getElementById("confetti-canvas");
-const singleMessage = document.getElementById("single-message");
-
-if (canvas) {
-    const ctx = canvas.getContext("2d");
-
-    function resizeCanvas() {
-        canvas.width = canvas.offsetWidth;
-        canvas.height = canvas.offsetHeight;
-    }
-
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
-
-    safeAddListener(confettiBtn, "click", function () {
-
-        if (singleMessage) {
-            singleMessage.classList.remove("show");
-            singleMessage.innerHTML = "";
-        }
-
-        let particles = [];
-
-        for (let i = 0; i < 200; i++) {
-            particles.push({
-                x: canvas.width / 2,
-                y: canvas.height / 2,
-                size: Math.random() * 6 + 4,
-                speedX: (Math.random() - 0.5) * 10,
-                speedY: (Math.random() - 0.5) * 10,
-                color: `hsl(${Math.random() * 360},100%,50%)`,
-                life: 100
-            });
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            particles.forEach((p, index) => {
-                ctx.fillStyle = p.color;
-                ctx.fillRect(p.x, p.y, p.size, p.size);
-
-                p.x += p.speedX;
-                p.y += p.speedY;
-                p.life--;
-
-                if (p.life <= 0) {
-                    particles.splice(index, 1);
-                }
-            });
-
-            if (particles.length > 0) {
-                requestAnimationFrame(animate);
-            }
-        }
-
-        animate();
-
-        // After 2 seconds show prank text
-        setTimeout(() => {
-            if (singleMessage) {
-                singleMessage.innerHTML = "💀 Stay single forever like me 😌";
-                singleMessage.classList.add("show");
-            }
-        }, 2000);
-    });
 }
 
-// =======================================
-// CHAOS MODE
-// =======================================
-const chaosBtn = document.getElementById("prank-mode");
-
-safeAddListener(chaosBtn, "click", function () {
-    document.body.classList.toggle("chaos");
-
-    if (document.body.classList.contains("chaos")) {
-        chaosBtn.innerText = "😈 Disable Chaos";
-    } else {
-        chaosBtn.innerText = "🔥 Chaos Mode";
-    }
-});
-
-// =======================================
-// MUSIC TOGGLE WITH FADE
-// =======================================
-const music = document.getElementById("bg-music");
-const musicBtn = document.getElementById("music-toggle");
-
-if (music) {
-    music.volume = 0.5;
+function drawHeart(x,y,size){
+ctx.fillStyle="rgba(255,105,180,0.6)";
+ctx.beginPath();
+ctx.moveTo(x,y);
+ctx.bezierCurveTo(x,y-size/2,x-size/2,y-size/2,x-size/2,y);
+ctx.bezierCurveTo(x-size/2,y+size/2,x,y+size/1.5,x,y+size);
+ctx.bezierCurveTo(x,y+size/1.5,x+size/2,y+size/2,x+size/2,y);
+ctx.bezierCurveTo(x+size/2,y-size/2,x,y-size/2,x,y);
+ctx.fill();
 }
 
-function fadeIn(audio) {
-    audio.volume = 0;
-    audio.play();
-    let vol = 0;
-
-    const interval = setInterval(() => {
-        if (vol < 0.5) {
-            vol += 0.05;
-            audio.volume = vol;
-        } else {
-            clearInterval(interval);
-        }
-    }, 100);
+function animateHearts(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+hearts.forEach(h=>{
+drawHeart(h.x,h.y,h.size);
+h.y-=h.speed;
+if(h.y<0){
+h.y=canvas.height;
+h.x=Math.random()*canvas.width;
+}
+});
+requestAnimationFrame(animateHearts);
 }
 
-function fadeOut(audio) {
-    let vol = audio.volume;
+animateHearts();
 
-    const interval = setInterval(() => {
-        if (vol > 0.05) {
-            vol -= 0.05;
-            audio.volume = vol;
-        } else {
-            clearInterval(interval);
-            audio.pause();
-        }
-    }, 100);
-}
+// Chaos Mode
+document.getElementById("chaos-btn").onclick=()=>{
+document.body.classList.toggle("chaos");
+};
 
-safeAddListener(musicBtn, "click", function () {
-    if (!music) return;
-
-    if (music.paused) {
-        fadeIn(music);
-        musicBtn.innerText = "⏸ Pause Music";
-    } else {
-        fadeOut(music);
-        musicBtn.innerText = "🎵 Play Music";
-    }
-});
-
-// =======================================
-// RIPPLE BUTTON EFFECT
-// =======================================
-document.querySelectorAll("button").forEach(button => {
-
-    button.addEventListener("click", function (e) {
-
-        const circle = document.createElement("span");
-        circle.classList.add("ripple");
-
-        const rect = button.getBoundingClientRect();
-        circle.style.left = `${e.clientX - rect.left}px`;
-        circle.style.top = `${e.clientY - rect.top}px`;
-
-        button.appendChild(circle);
-
-        setTimeout(() => circle.remove(), 600);
-    });
-});
+// Music
+const music=document.getElementById("bg-music");
+document.getElementById("music-btn").onclick=()=>{
+music.paused?music.play():music.pause();
+};

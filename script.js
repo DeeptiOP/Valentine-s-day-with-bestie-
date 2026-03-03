@@ -1,51 +1,38 @@
-// Typing Effect
-const text = "Today is all about celebrating YOU 🌸";
-let index = 0;
+// Typing animation
+const message = "This little page is just for you 🌷";
+let i = 0;
 
-function typeEffect(){
-    if(index < text.length){
-        document.getElementById("typing").innerHTML += text.charAt(index);
-        index++;
-        setTimeout(typeEffect, 60);
+function typeText(){
+    if(i < message.length){
+        document.getElementById("typing").innerHTML += message.charAt(i);
+        i++;
+        setTimeout(typeText, 50);
     }
 }
 
-typeEffect();
+typeText();
 
-// Floating Hearts
-function createHearts(){
-    const heart = document.createElement("div");
-    heart.classList.add("heart");
-    heart.innerHTML = "❤";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
-    document.body.appendChild(heart);
+// Unlock surprise
+const btn = document.getElementById("unlockBtn");
 
-    setTimeout(() => {
-        heart.remove();
-    }, 6000);
-}
+btn.addEventListener("click", () => {
 
-setInterval(createHearts, 500);
-
-// Reveal Surprise
-const revealBtn = document.getElementById("revealBtn");
-
-revealBtn.addEventListener("click", function(){
-    document.getElementById("finalMessage").classList.remove("hidden");
-    revealBtn.disabled = true;
+    document.getElementById("surprise").classList.remove("hidden");
+    btn.disabled = true;
     document.getElementById("music").play();
+
     createConfetti();
 });
 
-// Confetti
+// Confetti effect
 function createConfetti(){
-    for(let i=0;i<150;i++){
+    for(let i=0;i<120;i++){
         const confetti = document.createElement("div");
         confetti.classList.add("confetti");
-        confetti.style.left = Math.random()*100+"vw";
-        confetti.style.backgroundColor = 
+        confetti.style.left = Math.random()*100 + "vw";
+        confetti.style.backgroundColor =
             `hsl(${Math.random()*360},100%,50%)`;
+
         document.body.appendChild(confetti);
 
         setTimeout(()=>{
